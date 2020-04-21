@@ -19,8 +19,21 @@ function App() {
   });
 
   const contactsSupported = ('contacts' in navigator && 'ContactsManager' in window);
+
   console.log(window.isSecureContext);
   console.log(navigator);
+
+  const renderContacts = async () => {
+    try {
+      const contacts = await navigator.contacts.select(['name'], {});
+      console.log(contacts);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  renderContacts();
+
   return (
     <Fragment>
       <Header online={isOnLine} />
