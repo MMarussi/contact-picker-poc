@@ -1,0 +1,13 @@
+@import 'src/scss/index';
+
+.container {
+  background-color: $ebony-clay;
+  padding: 0 15px;
+  border-bottom: 1px solid $white;
+}
+
+@media screen and (max-width: 720px) {
+  .icon {
+    width: 35px;
+  }
+}

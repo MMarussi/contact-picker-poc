@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Fragment, useEffect, useState } from 'react';
+
+import CurrentPrice from './components/current';
+import Header from './components/header';
+import History from './components/history';
+import Snackbar from './components/snackbar';
 
 function App() {
+  const [isOnLine, setOnline] = useState(navigator.onLine);
+  const updateNetworkStatus = () => setOnline(navigator.onLine);
+
+  useEffect(() => {
+    window.addEventListener('offline', updateNetworkStatus);
+    window.addEventListener('online', updateNetworkStatus);
+    return () => {
+      window.removeEventListener('offline', updateNetworkStatus);
+      window.removeEventListener('online', updateNetworkStatus);
+    };
+  });
+
+  const contactsSupported = ('contacts' in navigator && 'ContactsManager' in window);
+  console.log(window.isSecureContext);
+  console.log(navigator);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      <Header online={isOnLine} />
+      <div>
+        {!contactsSupported && (
+          <p id="notSupported">
+            <b>Sorry!</b> This browser doesn't support the Contact
+              Picker API, which required for this demo. Try enabling the
+            <code>#enable-experimental-web-platform-features</code> in
+              chrome://flags and try again.
+          </p>
+
+        )}
+        <CurrentPrice />
+        <History />
+        <Snackbar online={isOnLine} />
+      </div>
+    </Fragment>
   );
 }
-
 export default App;
