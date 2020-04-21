@@ -26,7 +26,7 @@ function App() {
   const renderContacts = async () => {
     try {
       const contacts = await navigator.contacts.select(['name'], {});
-      console.log(contacts);
+      contacts.forEach(contact => console.log(contact));
     } catch (error) {
       console.log(error);
     }
