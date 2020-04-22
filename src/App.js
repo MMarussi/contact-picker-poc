@@ -23,13 +23,11 @@ function App() {
 
   const gatherContacts = () => {
     navigator.contacts
-      .select(['name'], {})
+      .select(['name', 'tel', 'email'], { multiple: false })
       .then((response) => {
         console.log('Contacts gathered');
         console.log(response);
         setContacts(response);
-        console.log('set contacts');
-        console.log(contacts);
       })
       .catch((error) => {
         console.log(error);
@@ -37,8 +35,6 @@ function App() {
   };
 
   console.log(window.isSecureContext);
-  console.log('Navigator');
-  console.log(navigator);
   return (
     <Fragment>
       <Header online={isOnLine} />
@@ -48,11 +44,18 @@ function App() {
             Obtener contactos
           </button>
         ) : (
-            <p id="notSupported">
-              <b>Sorry!</b>This browser doesn't support the Contact Picker API, which required for this demo.
-            Try enabling the <code>#enable-experimental-web-platform-features</code> in chrome://flags and try again.
-            </p>
-          )}
+          <p id="notSupported">
+            <b>Sorry!</b>This browser doesn't support the Contact Picker API, which required for this demo.
+          </p>
+        )}
+        {contacts.length > 0 &&
+          contacts.map((contact) => (
+            <div key={contact.name[0]} className="column center middle">
+              <span>{contact.name[0]}</span>
+              <span>{contact.tel[0]}</span>
+              <span>{contact.email[0]}</span>
+            </div>
+          ))}
         <CurrentPrice />
         <History />
         <Snackbar online={isOnLine} />
