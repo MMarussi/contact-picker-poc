@@ -20,10 +20,11 @@ function App() {
   });
 
   const contactsSupported = 'contacts' in navigator && 'ContactsManager' in window;
+  const contactProperties = ['name', 'tel', 'email'];
 
   const gatherContacts = () => {
     navigator.contacts
-      .select(['name', 'tel', 'email'], { multiple: false })
+      .select(contactProperties, { multiple: false })
       .then((response) => {
         console.log('Contacts gathered');
         console.log(response);
@@ -33,6 +34,13 @@ function App() {
         console.log(error);
       });
   };
+
+  const renderContacts = () =>
+    contacts.length > 0 &&
+    contacts.map((contact) => <div key={contact.name[0]}>{renderContactInfo(contact)}</div>);
+
+  const renderContactInfo = (contact) =>
+    contactProperties.map((property) => contact[property] && <span>{contact[property][0]}</span>);
 
   console.log(window.isSecureContext);
   return (
@@ -48,14 +56,7 @@ function App() {
             <b>Sorry!</b>This browser doesn't support the Contact Picker API, which required for this demo.
           </p>
         )}
-        {contacts.length > 0 &&
-          contacts.map((contact) => (
-            <div key={contact.name[0]} className="column center middle">
-              <span>{contact.name[0]}</span>
-              <span>{contact.tel[0]}</span>
-              <span>{contact.email[0]}</span>
-            </div>
-          ))}
+        {renderContacts()}
         <CurrentPrice />
         <History />
         <Snackbar online={isOnLine} />
