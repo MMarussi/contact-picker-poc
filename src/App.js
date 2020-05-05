@@ -37,7 +37,11 @@ function App() {
 
   const renderContacts = () =>
     contacts.length > 0 &&
-    contacts.map((contact) => <div key={contact.name[0]}>{renderContactInfo(contact)}</div>);
+    contacts.map((contact) => (
+      <div className="column center middle p-horizontal-5" key={contact.name[0]}>
+        {renderContactInfo(contact)}
+      </div>
+    ));
 
   const renderContactInfo = (contact) =>
     contactProperties.map(
@@ -63,7 +67,7 @@ function App() {
             Debido a cuestiones de seguridad o que el navegador es incompatible con contactPicker API, se inhabilitó el uso de la misma
           </p>
         )}
-        <div className="column center middle p-horizontal-5">{renderContacts()}</div>
+        {renderContacts()}
         <CurrentPrice />
         <History />
         <Snackbar online={isOnLine} />
