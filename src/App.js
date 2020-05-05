@@ -59,7 +59,7 @@ function App() {
       <Header online={isOnLine} />
       <div>
         {contactsSupported ? (
-          <button type="button" onClick={gatherContacts}>
+          <button className="m-vertical-20" type="button" onClick={gatherContacts}>
             Obtener contactos
           </button>
         ) : (
