@@ -40,7 +40,14 @@ function App() {
     contacts.map((contact) => <div key={contact.name[0]}>{renderContactInfo(contact)}</div>);
 
   const renderContactInfo = (contact) =>
-    contactProperties.map((property) => contact[property] && <span>{contact[property][0]}</span>);
+    contactProperties.map(
+      (property) =>
+        contact[property] && (
+          <span className="m-bottom-5" id="notSupported">
+            {contact[property][0]}
+          </span>
+        )
+    );
 
   console.log(window.isSecureContext);
   return (
@@ -52,11 +59,11 @@ function App() {
             Obtener contactos
           </button>
         ) : (
-          <p id="notSupported">
-            <b>Sorry!</b>This browser doesn't support the Contact Picker API, which required for this demo.
+          <p className="p-horizontal-10" id="notSupported">
+            Debido a cuestiones de seguridad o que el navegador es incompatible con contactPicker API, se inhabilitó el uso de la misma
           </p>
         )}
-        {renderContacts()}
+        <div className="column center middle p-horizontal-5">{renderContacts()}</div>
         <CurrentPrice />
         <History />
         <Snackbar online={isOnLine} />

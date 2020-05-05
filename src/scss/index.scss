@@ -56,3 +56,11 @@ code {
     min-width: 95px;
   }
 }
+
+@media screen and (max-width: 720px) {
+  .header {
+    &.title-1 {
+      font-size: 24px;
+    }
+  }
+}
